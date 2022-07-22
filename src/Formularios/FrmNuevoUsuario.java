@@ -4,6 +4,10 @@
  */
 package Formularios;
 
+import Clases.ClsCamara;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Samuel David Ortiz
@@ -13,8 +17,19 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
     /**
      * Creates new form FrmNuevoUsuario
      */
+    private ClsCamara camara;
+
     public FrmNuevoUsuario() {
         initComponents();
+
+        this.txtCodigo.setText(generarCodigo());
+    }
+    
+    private String generarCodigo() {
+        Date date = new Date();
+        SimpleDateFormat DateFor = new SimpleDateFormat("yyyyMMddHHmmss");
+
+        return DateFor.format(date);
     }
 
     /**
@@ -24,7 +39,6 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         pnlTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -57,6 +71,7 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
         lblEspacio6 = new javax.swing.JLabel();
         lblContra2 = new javax.swing.JLabel();
         txtContra2 = new javax.swing.JPasswordField();
+        chkIniciarCamara = new javax.swing.JCheckBox();
         pnlBotones = new javax.swing.JPanel();
         btnCrear = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -107,6 +122,11 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
 
         lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/pinwi.png"))); // NOI18N
         lblImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        lblImagen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImagenMouseClicked(evt);
+            }
+        });
 
         pnlDatos1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -171,13 +191,22 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
         pnlDatos1.add(lblContra2, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 300, 224, 45));
         pnlDatos1.add(txtContra2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 300, 224, 45));
 
+        chkIniciarCamara.setText("jCheckBox1");
+        chkIniciarCamara.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkIniciarCamaraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(lblImagen)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chkIniciarCamara)
+                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
@@ -189,8 +218,10 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosLayout.createSequentialGroup()
                 .addGap(90, 90, 90)
-                .addComponent(lblImagen)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(chkIniciarCamara)
+                .addContainerGap(88, Short.MAX_VALUE))
             .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlDatosLayout.createSequentialGroup()
                     .addGap(38, 38, 38)
@@ -238,6 +269,7 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtContra1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContra1KeyReleased
@@ -248,6 +280,27 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void chkIniciarCamaraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkIniciarCamaraActionPerformed
+        if(chkIniciarCamara.isSelected())
+        {                        
+            camara = new ClsCamara(this.lblImagen);
+            camara.start();
+        }
+        
+        if(!chkIniciarCamara.isSelected())
+        {
+            camara.DetenerVideo();
+            camara.stop();
+            lblImagen.setIcon(null);
+        }
+        
+        //this.btnSeleccionarImagen.setEnabled(!this.chkIniciarCamara.isSelected());
+    }//GEN-LAST:event_chkIniciarCamaraActionPerformed
+
+    private void lblImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenMouseClicked
+        new FrmFoto(this.txtCodigo.getText(), this.lblImagen).setVisible(true);
+    }//GEN-LAST:event_lblImagenMouseClicked
 
     /**
      * @param args the command line arguments
@@ -287,6 +340,7 @@ public class FrmNuevoUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
+    private javax.swing.JCheckBox chkIniciarCamara;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

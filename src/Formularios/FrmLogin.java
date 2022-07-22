@@ -200,7 +200,7 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        new FrmFoto().setVisible(true);
+        //new FrmFoto().setVisible(true);
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed

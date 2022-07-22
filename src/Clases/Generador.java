@@ -39,7 +39,7 @@ public class Generador extends Thread {
 
         System.out.println("Hora Inicio: " + horaIni());
 
-        for (int i = 1; i <= 1000000; i++) {
+        for (int i = 1; i <= 10000; i++) {
             numero = (int) (Math.random() * (min - max + 1) + max);
             if (numeros.contains(numero)) {
                 i--;
@@ -58,6 +58,7 @@ public class Generador extends Thread {
         }
 
         JOptionPane.showMessageDialog(null, "Se finalizaron de generar lo números aleatorios");
+        System.out.println("Hora Inicio: " + horaIni());
 
     }
 
