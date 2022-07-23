@@ -45,9 +45,11 @@ public class FrmFoto extends javax.swing.JFrame {
         this.setId(id);
         this.setImagen(imagen);
         
+        
         initComponents();
 
         camara = new ClsCamara(lblImagen);
+        camara.setjButton(btnTomar);
         camara.start();
     }
 
@@ -72,7 +74,6 @@ public class FrmFoto extends javax.swing.JFrame {
 
         lblImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        lblFoto.setText("jLabel1");
         lblFoto.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -103,8 +104,8 @@ public class FrmFoto extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -142,9 +143,7 @@ public class FrmFoto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTomarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarActionPerformed
-        btnTomar.setText("Tomar Otra");
-        btnGuardar.setEnabled(true);
-
+        
         ImageIcon foto;
 
         foto = new ImageIcon(camara.GetImage640x480().getImage());

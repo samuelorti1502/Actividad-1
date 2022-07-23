@@ -63,8 +63,8 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblFoto" max="32767" attributes="0"/>
                       <Component id="jPanel2" max="32767" attributes="0"/>
+                      <Component id="lblFoto" min="-2" pref="215" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -85,7 +85,6 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblFoto">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                 <EtchetBorder bevelType="0"/>

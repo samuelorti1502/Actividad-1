@@ -4,6 +4,12 @@
  */
 package Formularios;
 
+import Clases.ClsConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Samuel David Ortiz
@@ -13,6 +19,13 @@ public class FrmLogin extends javax.swing.JFrame {
     /**
      * Creates new form FrmLogin
      */
+    
+    private boolean isLogin = false;
+    
+    private String usuario;
+    private String codigo;
+    private String url;
+    
     public FrmLogin() {
         initComponents();
     }
@@ -200,12 +213,81 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        //new FrmFoto().setVisible(true);
+        try {
+
+            ClsConnection cn = new ClsConnection();
+            cn.conexion("BasesDeDatos1", "umg", "1234");
+
+            String query = "SELECT id, codigo, usuario, contraseña, urlFoto FROM usuarios WHERE usuario = '" + txtUsuario.getText() + "'";
+
+            ResultSet rs = cn.select(query);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                
+                this.setCodigo(rs.getString("codigo"));
+                this.setUsuario(rs.getString("usuario"));
+                this.setUrl(rs.getString("urlFoto"));
+                String pass = rs.getString("contraseña");
+
+                if (getUsuario().equals(txtUsuario.getText()) && pass.equals(String.valueOf(txtContraseña.getPassword()))) {
+                    setIsLogin(true);
+                    
+                    FrmGenerador info = new FrmGenerador();
+                    info.usuario(getUsuario(), getCodigo(), getUrl());
+                    info.setVisible(true);
+                    
+                    //System.out.println("URL " + this.getUrl());
+                    
+                    //info.datos(this.getUrl());
+                    
+                    this.dispose();
+                    //System.out.println("Login realizado correctamente");
+                }
+
+                //System.out.format("%s, %s, %s\n", id, usuario, pass);
+            }
+            cn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         new FrmNuevoUsuario().setVisible(true);
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean isIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
 
     /**
      * @param args the command line arguments

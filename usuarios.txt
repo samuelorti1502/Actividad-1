@@ -1,0 +1,6 @@
+20220721235605,,,,,,,,,./src/Images/Fotos/U 20220721235605.jpg
+20220722001341,,,,,,,,,./src/Images/Fotos/U 20220722001341.jpg
+20220722001406,Samuel,David,Ortiz,Martinez,2001-05-02,sd90,1234,1234,./src/Images/Fotos/U 20220722001406.jpg
+20220722001502,Samuel,David,Ortiz,Martinez,2001-02-05,sd90,1234,1234,./src/Images/Fotos/U 20220722001502.jpg
+20220722001712,Samuel,David,Ortiz,Martinez,2001-02-05,sd90,1234,1234,./src/Images/Fotos/U 20220722001712.jpg
+20220722001837,sAM,,oRT,,2002-02-04,sd,123,123,./src/Images/Fotos/U 20220722001837.jpg

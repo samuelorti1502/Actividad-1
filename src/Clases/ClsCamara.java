@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import org.opencv.core.Core;
@@ -29,10 +30,12 @@ import org.opencv.videoio.Videoio;
 public class ClsCamara extends Thread {
 
     private boolean result;
+    private boolean nEntro;
     private String error;
 
     private JLabel jLabel;
     private int cameraIndex;
+    private JButton jButton;
 
     private int i;
     VideoCapture video;
@@ -110,9 +113,6 @@ public class ClsCamara extends Thread {
         CascadeClassifier faceDetector = new CascadeClassifier("extlib/haarcascade_frontalface_alt.xml");
         MatOfRect faceDetections = new MatOfRect();
 
-        //VideoCapture cap = new VideoCapture(0);
-        System.out.println("nDeteccion de rostros con OpenCV y Webcam en java");
-
         if (video.isOpened()) {
             while (true) {
                 try {
@@ -123,19 +123,22 @@ public class ClsCamara extends Thread {
                     if (!img.empty()) {
                         faceDetector.detectMultiScale(img, faceDetections);
 
-                        boolean nEntro = true;
+                        setnEntro(false);
+                        //jButton.setEnabled(false);
 
                         for (Rect rect : faceDetections.toArray()) {
+                            setnEntro(true);
+                            //jButton.setEnabled(true);
                             Imgproc.rectangle(img,
-                                    new Point(rect.x-10, rect.y-50),
+                                    new Point(rect.x - 10, rect.y - 50),
                                     new Point(rect.x + rect.width * 1.2, rect.y + rect.height * 1.4),
                                     new Scalar(0, 255, 0));
-
-                            if (nEntro) {
-                                Mat region = new Mat(img, rect);
-                                Imgcodecs.imwrite("Imagen.jpg", region);
-                                nEntro = false;
+                            if (isnEntro()) {
+                                //Mat region = new Mat(img, rect);
+                                //Imgcodecs.imwrite("Imagen.jpg", region);
+                                setnEntro(false);
                             }
+
                         }
 
                         jLabel.setIcon(new ImageIcon(convertir(img)));
@@ -189,5 +192,21 @@ public class ClsCamara extends Thread {
 
     public void DetenerVideo() {
         video.release();
+    }
+
+    public boolean isnEntro() {
+        return nEntro;
+    }
+
+    public void setnEntro(boolean nEntro) {
+        this.nEntro = nEntro;
+    }
+
+    public JButton getjButton() {
+        return jButton;
+    }
+
+    public void setjButton(JButton jButton) {
+        this.jButton = jButton;
     }
 }
