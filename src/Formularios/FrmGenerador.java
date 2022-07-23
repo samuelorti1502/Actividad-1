@@ -10,6 +10,7 @@ import clases.ClsGenerador;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -22,14 +23,15 @@ public class FrmGenerador extends javax.swing.JFrame {
      */
     
     ClsReloj reloj = new ClsReloj();
-    
-    ClsNumText letras;
+    ClsGenerador gen = new ClsGenerador();
     
     private int id;
     private ImageIcon Img;
     private Icon icono;
     
     public boolean continuarHilo = false;
+    
+    private JLabel estadisticas;    
     
     public FrmGenerador() {
         initComponents();
@@ -38,12 +40,6 @@ public class FrmGenerador extends javax.swing.JFrame {
         reloj.start();
         
         txtConsola.append("Programa iniciado correctamente..." + System.lineSeparator());
-        
-//        Generador gen = new Generador();
-//        gen.setTxtConsola(txtConsola);
-//        gen.start();
-        
-        
         
     }
 
@@ -82,10 +78,21 @@ public class FrmGenerador extends javax.swing.JFrame {
         pnlDatos = new javax.swing.JPanel();
         ImgUsuario = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         pnlConsola = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtConsola = new javax.swing.JTextArea();
         btnGenerar = new javax.swing.JButton();
+        btnEstadisticas = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtMin = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtMax = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtCant = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,7 +119,7 @@ public class FrmGenerador extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlTituloLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblReloj, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -155,17 +162,16 @@ public class FrmGenerador extends javax.swing.JFrame {
                 .addComponent(ImgUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
-        pnlConsola.setBorder(javax.swing.BorderFactory.createTitledBorder("Consola"));
         pnlConsola.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtConsola.setColumns(20);
         txtConsola.setRows(5);
         jScrollPane1.setViewportView(txtConsola);
 
-        pnlConsola.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 87, 757, 178));
+        pnlConsola.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 757, 178));
 
         btnGenerar.setText("Iniciar");
         btnGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +179,58 @@ public class FrmGenerador extends javax.swing.JFrame {
                 btnGenerarActionPerformed(evt);
             }
         });
-        pnlConsola.add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 34, 146, 40));
+        pnlConsola.add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 146, 40));
+
+        btnEstadisticas.setText("Estadisticas");
+        btnEstadisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstadisticasActionPerformed(evt);
+            }
+        });
+        pnlConsola.add(btnEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 146, 40));
+
+        jLabel3.setText("Numero minimo");
+        pnlConsola.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 40));
+        pnlConsola.add(txtMin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 65, 40));
+
+        jLabel4.setText("Numero maximo");
+        pnlConsola.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 120, 40));
+        pnlConsola.add(txtMax, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 65, 40));
+
+        jLabel5.setText("Cantidad a generar");
+        pnlConsola.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 150, 40));
+
+        txtCant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantActionPerformed(evt);
+            }
+        });
+        pnlConsola.add(txtCant, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 10, 65, 40));
+
+        jTabbedPane1.addTab("Consola", pnlConsola);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Estadisticas", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,7 +243,7 @@ public class FrmGenerador extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(pnlConsola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jTabbedPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -196,17 +253,24 @@ public class FrmGenerador extends javax.swing.JFrame {
                 .addComponent(pnlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlConsola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        ClsGenerador gen = new ClsGenerador();
+        
         gen.setTxtConsola(txtConsola);
+        gen.setTxtEstadisticas(jTextArea1);
+        gen.setMin(Integer.parseInt(this.txtMin.getText()));
+        gen.setMax(Integer.parseInt(this.txtMax.getText()));
+        gen.setCant(Integer.parseInt(this.txtCant.getText()));
         
         if (btnGenerar.getText().equals("Iniciar")) {
             btnGenerar.setText("Detener");
@@ -216,15 +280,22 @@ public class FrmGenerador extends javax.swing.JFrame {
             continuarHilo = false;
         }
         
-        System.out.println("continuarHilo = " + continuarHilo);
+        //System.out.println("continuarHilo = " + continuarHilo);
         
         while(continuarHilo){
             gen.start();
         }
         
-        
-        
     }//GEN-LAST:event_btnGenerarActionPerformed
+
+    private void btnEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticasActionPerformed
+        //new FrmEstadisticas().setVisible(true);
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_btnEstadisticasActionPerformed
+
+    private void txtCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantActionPerformed
 
     public int getId() {
         return id;
@@ -271,15 +342,26 @@ public class FrmGenerador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ImgUsuario;
+    private javax.swing.JButton btnEstadisticas;
     private javax.swing.JButton btnGenerar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblReloj;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JPanel pnlConsola;
     private javax.swing.JPanel pnlDatos;
     private javax.swing.JPanel pnlTitulo;
+    private javax.swing.JTextField txtCant;
     private javax.swing.JTextArea txtConsola;
+    private javax.swing.JTextField txtMax;
+    private javax.swing.JTextField txtMin;
     // End of variables declaration//GEN-END:variables
 }

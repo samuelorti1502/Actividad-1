@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.Stack;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 /**
@@ -26,13 +27,36 @@ public class ClsGenerador extends Thread {
     private int hora;
     private int minuto;
     private int segundo;
-    //private String horaIni;
 
     private String horaIni;
     private String horaFin;
 
+    private int par = 0;
+    private int impar = 0;
+    private int primo = 0;
+    private int noPrimo = 0;
+    private int cifra1 = 0;
+    private int cifra2 = 0;
+    private int cifra3 = 0;
+    private int cifra4 = 0;
+    private int cifra5 = 0;
+    private int cifra6 = 0;
+    private int cifra7 = 0;
+    private int cifra8 = 0;
+    private int cifra9 = 0;
+    private int cifra10 = 0;
+    private int suma10 = 0;
+    private int suma25 = 0;
+    private int suma70 = 0;
+    private int suma21 = 0;
+
     private JTextArea txtConsola;
+    private JTextArea txtEstadisticas;
     
+    private int min = 0;
+    private int max = 0;
+    private int cant = 0;
+
     public void run() {
         generador1();
     }
@@ -40,12 +64,14 @@ public class ClsGenerador extends Thread {
     public void generador1() {
         int min = 1;
         int max = 10000000;
+        
+        int cant = 100000;
 
         //System.out.println("Hora Inicio: " + horaIni());
         this.txtConsola.append("Hora Inicio: " + horaIni() + System.lineSeparator());
 
-        for (int i = 1; i <= 10000; i++) {
-            numero = (int) (Math.random() * (min - max + 1) + max);
+        for (int i = getMin(); i <= getCant(); i++) {
+            numero = (int) (Math.random() * (getMin() - getMax() + 1) + getMax());
             if (numeros.contains(numero)) {
                 i--;
             } else {
@@ -54,19 +80,22 @@ public class ClsGenerador extends Thread {
                 String cifras = Integer.toString(numero);
 
                 if (numero % 2 == 0) {
+                    setPar(getPar() + 1);
                     this.txtConsola.append(i + " - El numero " + numero + " es par, tiene " + cifras.length() + " cifras"
-                            + " y la suma de sus cifras es " + sumaCifras(numero) + 
-                            " en letras " + Convertir(cifras, false) + System.lineSeparator());
+                            + " y la suma de sus cifras es " + sumaCifras(numero)
+                            + " en letras " + Convertir(cifras, false) + System.lineSeparator());
 
                     if (sumaCifras(numero) == 21) {
                         this.txtConsola.append("La suma de las cifras del numero " + numero + " es 21" + System.lineSeparator());
                     }
-                    
-                    //this.txtConsola.append(Convertir(cifras, true) + System.lineSeparator());
 
+                    //this.txtConsola.append(Convertir(cifras, true) + System.lineSeparator());
                     //System.out.println("Suma de cifras " + sumaCifras(numero));
                     scrollDown();
                 } else {
+
+                    setImpar(getImpar() + 1);
+
                     this.txtConsola.append(i + " - El numero " + numero + " es impar, tiene " + cifras.length() + " cifras"
                             + " y la suma de sus cifras es " + sumaCifras(numero) + System.lineSeparator());
                     scrollDown();
@@ -74,21 +103,64 @@ public class ClsGenerador extends Thread {
 
                 if (EsPrimo(numero)) {
                     this.txtConsola.append(i + " - El numero " + numero + " es primo" + System.lineSeparator());
+                    setPrimo(getPrimo() + 1);
                     scrollDown();
                 }
-                
-                
-                
-                
+
+                switch (cifras.length()) {
+                    case 1:
+                        this.setCifra1(getCifra1() + 1);
+                        break;
+                    case 2:
+                        this.setCifra2(getCifra2() + 1);
+                        break;
+                    case 3:
+                        this.setCifra3(getCifra3() + 1);
+                        break;
+                    case 4:
+                        this.setCifra4(getCifra4() + 1);
+                        break;
+                    case 5:
+                        this.setCifra5(getCifra5() + 1);
+                        break;
+                    case 6:
+                        this.setCifra6(getCifra6() + 1);
+                        break;
+                    case 7:
+                        this.setCifra7(getCifra7() + 1);
+                        break;
+                    case 8:
+                        this.setCifra8(getCifra8() + 1);
+                        break;
+                    case 9:
+                        this.setCifra9(getCifra9() + 1);
+                        break;
+                    case 10:
+                        this.setCifra10(getCifra10() + 1);
+                        break;
+                }
+
+                switch (sumaCifras(numero)) {
+                    case 10:
+                        this.setSuma10(getSuma10() + 1);
+                        break;
+                    case 25:
+                        this.setSuma25(getSuma25() + 1);
+                        break;
+                    case 70:
+                        this.setSuma70(getSuma70() + 1);
+                        break;
+                    case 21:
+                        this.setSuma21(getSuma21() + 1);
+                        break;
+                }
 
                 //this.txtConsola.append(i + " - El numero " + numero + " contiene " + cifras.length() + System.lineSeparator());
                 /*try ( PrintWriter pw = new PrintWriter(Files.newBufferedWriter(Paths.get("./aleatorios.txt")))) {
                     for (Object n : numeros) {
                         //System.out.println(i + "-" + n + "");
                         pw.println(n + ",");
-                        
-                        
-                        
+
                     }
                     pw.close();
                 } catch (IOException ex) {
@@ -102,7 +174,34 @@ public class ClsGenerador extends Thread {
         this.txtConsola.append("Hora Fin: " + horaIni() + System.lineSeparator());
         this.txtConsola.append("Se generaron " + numeros.size() + " números" + System.lineSeparator());
         this.txtConsola.append("Se generaron " + numeros.size() + " números positivos" + System.lineSeparator());
+
+        this.getTxtEstadisticas().append("Cantidad de pares: " + getPar() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de impares: " + getImpar() + System.lineSeparator());
+        
+        this.getTxtEstadisticas().append("Cantidad de numeros primos: " + getPrimo() + System.lineSeparator());
+        
+        int noPrimos = cant - getPrimo();
+        
+        this.getTxtEstadisticas().append("Cantidad de numeros no primos: " + noPrimos + System.lineSeparator());
+        
+        this.getTxtEstadisticas().append("Cantidad de numeros de 1 cifra: " + getCifra1() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 2 cifras: " + getCifra2() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 3 cifras: " + getCifra3() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 4 cifras: " + getCifra4() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 5 cifras: " + getCifra5() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 6 cifras: " + getCifra6() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 7 cifras: " + getCifra7() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 8 cifras: " + getCifra8() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 9 cifras: " + getCifra9() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de 10 cifras: " + getCifra10() + System.lineSeparator());
+        
+        this.getTxtEstadisticas().append("Cantidad de numeros de cuyas cifras suman 10: " + getSuma10() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de cuyas cifras suman 25: " + getSuma25() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de cuyas cifras suman 70: " + getSuma70() + System.lineSeparator());
+        this.getTxtEstadisticas().append("Cantidad de numeros de cuyas cifras suman 21: " + getSuma21() + System.lineSeparator());
         scrollDown();
+
+        //return getPar();
     }
 
     public void generador2() {
@@ -273,7 +372,7 @@ public class ClsGenerador extends Thread {
     public void setTxtConsola(JTextArea txtConsola) {
         this.txtConsola = txtConsola;
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Numeros a letras">                          
     private final String[] UNIDADES = {"", "un ", "dos ", "tres ", "cuatro ", "cinco ", "seis ", "siete ", "ocho ", "nueve "};
     private final String[] DECENAS = {"diez ", "once ", "doce ", "trece ", "catorce ", "quince ", "dieciseis ",
@@ -387,4 +486,181 @@ public class ClsGenerador extends Thread {
         }
         return n + getMiles(miles);
     }// </editor-fold> 
+
+    public int getPar() {
+        return par;
+    }
+
+    public void setPar(int par) {
+        this.par = par;
+    }
+
+    public int getImpar() {
+        return impar;
+    }
+
+    public void setImpar(int impar) {
+        this.impar = impar;
+    }
+
+    public int getPrimo() {
+        return primo;
+    }
+
+    public void setPrimo(int primo) {
+        this.primo = primo;
+    }
+
+    public int getNoPrimo() {
+        return noPrimo;
+    }
+
+    public void setNoPrimo(int noPrimo) {
+        this.noPrimo = noPrimo;
+    }
+
+    public JTextArea getTxtEstadisticas() {
+        return txtEstadisticas;
+    }
+
+    public void setTxtEstadisticas(JTextArea txtEstadisticas) {
+        this.txtEstadisticas = txtEstadisticas;
+    }
+
+    public int getCifra1() {
+        return cifra1;
+    }
+
+    public void setCifra1(int cifra1) {
+        this.cifra1 = cifra1;
+    }
+
+    public int getCifra2() {
+        return cifra2;
+    }
+
+    public void setCifra2(int cifra2) {
+        this.cifra2 = cifra2;
+    }
+
+    public int getCifra3() {
+        return cifra3;
+    }
+
+    public void setCifra3(int cifra3) {
+        this.cifra3 = cifra3;
+    }
+
+    public int getCifra4() {
+        return cifra4;
+    }
+
+    public void setCifra4(int cifra4) {
+        this.cifra4 = cifra4;
+    }
+
+    public int getCifra5() {
+        return cifra5;
+    }
+
+    public void setCifra5(int cifra5) {
+        this.cifra5 = cifra5;
+    }
+
+    public int getCifra6() {
+        return cifra6;
+    }
+
+    public void setCifra6(int cifra6) {
+        this.cifra6 = cifra6;
+    }
+
+    public int getCifra7() {
+        return cifra7;
+    }
+
+    public void setCifra7(int cifra7) {
+        this.cifra7 = cifra7;
+    }
+
+    public int getCifra8() {
+        return cifra8;
+    }
+
+    public void setCifra8(int cifra8) {
+        this.cifra8 = cifra8;
+    }
+
+    public int getCifra9() {
+        return cifra9;
+    }
+
+    public void setCifra9(int cifra9) {
+        this.cifra9 = cifra9;
+    }
+
+    public int getCifra10() {
+        return cifra10;
+    }
+
+    public void setCifra10(int cifra10) {
+        this.cifra10 = cifra10;
+    }
+
+    public int getSuma10() {
+        return suma10;
+    }
+
+    public void setSuma10(int suma10) {
+        this.suma10 = suma10;
+    }
+
+    public int getSuma25() {
+        return suma25;
+    }
+
+    public void setSuma25(int suma25) {
+        this.suma25 = suma25;
+    }
+
+    public int getSuma70() {
+        return suma70;
+    }
+
+    public void setSuma70(int suma70) {
+        this.suma70 = suma70;
+    }
+
+    public int getSuma21() {
+        return suma21;
+    }
+
+    public void setSuma21(int suma21) {
+        this.suma21 = suma21;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getCant() {
+        return cant;
+    }
+
+    public void setCant(int cant) {
+        this.cant = cant;
+    }
+
 }
